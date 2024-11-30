@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlagExplorer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Nunito:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Schermata iniziale -->
+    <div id="home-screen" class="screen">
+        <div class="content-container">
+            <h1>🌍 FlagExplorer</h1>
+            <button id="start-button" class="primary-button animated-button"><i class="fas fa-flag"></i> Inizia</button>
+        </div>
+    </div>
+
+    <!-- Schermata di gioco -->
+    <div id="game-screen" class="screen" style="display: none;">
+        <div class="content-container">
+            <h2><i class="fas fa-map-marker-alt"></i> Indovina il Paese</h2>
+            <div class="flag-container">
+                <img id="flag-image" src="" alt="Bandiera" class="flag-image">
+            </div>
+            <input type="text" id="country-input" placeholder="Inserisci il nome del Paese" class="input-field">
+            <button id="submit-button" class="primary-button animated-button">Invia</button>
+            <p id="feedback"></p>
+            <button id="next-button" class="secondary-button animated-button">Prossima bandiera</button>
+            <div id="fact-section" style="display: none;">
+                <h3><i class="fas fa-info-circle"></i> Curiosità:</h3>
+                <p id="country-fact"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Creato da Giuliano Gagliardo, 2024</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -7,24 +7,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #00c6ff;
+            --secondary-color: #0072ff;
+            --accent-color: #ff6b6b;
+            --dark-bg: #1a1a1a;
+            --card-bg: rgba(0, 0, 0, 0.8);
+            --light-text: #ffffff;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-text);
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .screen {
             padding: 40px;
             max-width: 800px;
             margin: 30px auto;
-            background: rgba(0, 0, 0, 0.8);
+            background: var(--card-bg);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
             border-radius: 25px;
-            transition: transform 0.3s ease-in-out;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .content-container {
@@ -37,17 +49,23 @@
         .flag-container {
             width: 100%;
             max-width: 400px;
+            height: 240px;
             margin: 20px 0;
             padding: 15px;
-            background: #1a1a1a;
+            background: var(--dark-bg);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
         .flag-image {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+            object-fit: contain;
         }
 
         .input-field {
@@ -56,31 +74,47 @@
             width: 85%;
             max-width: 450px;
             margin-bottom: 25px;
-            border: 3px solid #00c6ff;
+            border: 3px solid var(--primary-color);
             border-radius: 30px;
-            transition: box-shadow 0.3s ease;
+            transition: all 0.3s ease;
             background: #333;
-            color: #ffffff;
+            color: var(--light-text);
         }
 
         .input-field:focus {
             box-shadow: 0 0 25px rgba(0, 198, 255, 0.5);
             outline: none;
+            transform: scale(1.02);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 10px 0;
+            width: 100%;
         }
 
         .primary-button, .secondary-button {
             padding: 15px 30px;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
             border: none;
             border-radius: 30px;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
         }
 
         .primary-button {
-            background: #ff6b6b;
-            color: #ffffff;
+            background: var(--accent-color);
+            color: var(--light-text);
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.5);
+            min-width: 160px;
         }
 
         .primary-button:hover {
@@ -91,14 +125,14 @@
 
         .secondary-button {
             background: #444;
-            color: #ffffff;
-            margin-top: 20px;
+            color: var(--light-text);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            min-width: 160px;
         }
 
         .secondary-button:hover {
             background: #333;
-            transform: scale(1.1);
+            transform: scale(1.05);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
         }
 
@@ -106,13 +140,89 @@
             font-weight: bold;
             margin: 25px 0;
             font-size: 24px;
+            min-height: 36px;
+            transition: all 0.3s ease;
         }
 
-        #score-section {
-            margin-top: 25px;
-            font-size: 22px;
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            min-width: 120px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 28px;
             font-weight: bold;
-            color: #ff6b6b;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 10px;
+            background: #333;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .fact-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            max-width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.5s ease-out;
+            display: none;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #444;
+            color: var(--light-text);
+        }
+
+        .difficulty-btn.active {
+            background: var(--primary-color);
+            transform: scale(1.1);
         }
 
         .study-mode {
@@ -146,38 +256,84 @@
 
         .study-card img {
             width: 100%;
-            height: auto;
-            max-height: 120px;
+            height: 120px;
             border-radius: 15px;
             margin-bottom: 15px;
             object-fit: contain;
         }
 
-        footer {
-            margin-top: 50px;
-            font-size: 16px;
-            color: #ffffff;
-        }
-
-        footer p {
-            text-align: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.6);
+        .study-filter {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+            max-width: 300px;
             border-radius: 15px;
+            border: 2px solid var(--primary-color);
+            background: #333;
+            color: var(--light-text);
         }
 
-        @media (max-width: 600px) {
-            h1, h2 {
-                font-size: 28px;
-            }
+        .region-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
 
-            .input-field, .primary-button, .secondary-button {
-                width: 100%;
-                margin-bottom: 20px;
-            }
+        .region-btn {
+            padding: 8px 15px;
+            border-radius: 15px;
+            background: #444;
+            color: var(--light-text);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-            .screen {
-                margin: 20px;
+        .region-btn.active {
+            background: var(--primary-color);
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 16px;
+            color: var(--light-text);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            top: 0;
+            z-index: 1000;
+            animation: confetti-fall 5s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                opacity: 1;
+                top: -10px;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                top: 100vh;
+                transform: translateX(100px) rotate(360deg);
             }
         }
 
@@ -191,15 +347,83 @@
                 transform: translateY(0);
             }
         }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            h1, h2 {
+                font-size: 28px;
+            }
+
+            .input-field, .primary-button, .secondary-button {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .screen {
+                margin: 15px;
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .stat-item {
+                margin: 5px 0;
+            }
+
+            .region-filter {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Loader -->
+    <div id="loader" class="loader" style="display: none;"></div>
+
     <!-- Schermata iniziale -->
     <div id="home-screen" class="screen">
         <div class="content-container">
             <h1>🌍 FlagExplorer</h1>
-            <button id="start-button" class="primary-button animated-button"><i class="fas fa-flag"></i> Inizia</button>
-            <button id="study-mode-button" class="secondary-button animated-button"><i class="fas fa-book"></i> Modalità Studio</button>
+            <p>Metti alla prova la tua conoscenza delle bandiere del mondo!</p>
+            
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="all">Tutti</button>
+                <button class="difficulty-btn" data-difficulty="easy">Facile</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medio</button>
+                <button class="difficulty-btn" data-difficulty="hard">Difficile</button>
+            </div>
+            
+            <div class="button-group">
+                <button id="start-button" class="primary-button animated-button">
+                    <i class="fas fa-flag"></i> Inizia
+                </button>
+                <button id="study-mode-button" class="secondary-button animated-button">
+                    <i class="fas fa-book"></i> Modalità Studio
+                </button>
+            </div>
         </div>
     </div>
 
@@ -207,17 +431,54 @@
     <div id="game-screen" class="screen" style="display: none;">
         <div class="content-container">
             <h2><i class="fas fa-map-marker-alt"></i> Indovina il Paese</h2>
+            
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-value" id="score">0</div>
+                    <div class="stat-label">Punteggio</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="streak">0</div>
+                    <div class="stat-label">Serie</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="flags-count">0/0</div>
+                    <div class="stat-label">Bandiere</div>
+                </div>
+            </div>
+            
             <div class="flag-container">
                 <img id="flag-image" src="" alt="Bandiera" class="flag-image">
             </div>
+            
             <input type="text" id="country-input" placeholder="Inserisci il nome del Paese" class="input-field">
-            <button id="submit-button" class="primary-button animated-button">Invia</button>
-            <button id="hint-button" class="secondary-button animated-button">Chiedi Aiuto</button>
-            <button id="back-to-home-button" class="secondary-button animated-button">Torna alla Home</button>
-            <p id="feedback"></p>
-            <div id="score-section">
-                <h3><i class="fas fa-trophy"></i> Punteggio: <span id="score">0</span></h3>
+            
+            <div class="button-group">
+                <button id="submit-button" class="primary-button animated-button">
+                    <i class="fas fa-check"></i> Invia
+                </button>
+                <button id="skip-button" class="secondary-button animated-button">
+                    <i class="fas fa-forward"></i> Salta
+                </button>
+                <button id="hint-button" class="secondary-button animated-button">
+                    <i class="fas fa-lightbulb"></i> Aiuto
+                </button>
             </div>
+            
+            <p id="feedback"></p>
+            
+            <div id="fact-card" class="fact-card">
+                <h3><i class="fas fa-info-circle"></i> Curiosità</h3>
+                <p id="country-fact"></p>
+            </div>
+            
+            <button id="back-to-home-button" class="secondary-button animated-button">
+                <i class="fas fa-home"></i> Torna alla Home
+            </button>
         </div>
     </div>
 
@@ -225,9 +486,31 @@
     <div id="end-screen" class="screen" style="display: none;">
         <div class="content-container">
             <h2>🎉 Complimenti! 🎉</h2>
-            <p>Il tuo punteggio finale è: <span id="final-score"></span></p>
-            <button id="restart-button" class="primary-button animated-button">Ricomincia</button>
-            <button id="share-button" class="secondary-button animated-button">Condividi il tuo punteggio</button>
+            <p>Hai completato il quiz!</p>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-value" id="final-score">0</div>
+                    <div class="stat-label">Punteggio Finale</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="final-correct">0</div>
+                    <div class="stat-label">Risposte Corrette</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="final-accuracy">0%</div>
+                    <div class="stat-label">Precisione</div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button id="restart-button" class="primary-button animated-button">
+                    <i class="fas fa-redo"></i> Ricomincia
+                </button>
+                <button id="share-button" class="secondary-button animated-button">
+                    <i class="fas fa-share"></i> Condividi
+                </button>
+            </div>
         </div>
     </div>
 
@@ -235,8 +518,19 @@
     <div id="study-screen" class="screen" style="display: none;">
         <div class="content-container">
             <h2><i class="fas fa-book"></i> Modalità Studio</h2>
+            
+            <input type="text" id="study-filter" placeholder="Cerca un paese..." class="study-filter">
+            
+            <div id="region-filter" class="region-filter">
+                <button class="region-btn active" data-region="all">Tutte le regioni</button>
+                <!-- Le regioni verranno aggiunte dinamicamente dal JavaScript -->
+            </div>
+            
             <div class="study-mode" id="study-container"></div>
-            <button id="back-button" class="primary-button animated-button">Torna al menu</button>
+            
+            <button id="back-button" class="primary-button animated-button">
+                <i class="fas fa-arrow-left"></i> Torna al menu
+            </button>
         </div>
     </div>
 
@@ -245,9 +539,22 @@
     </footer>
 
     <script>
+        // Variabili globali
+        let countries = [];
+        let filteredCountries = [];
+        let currentCountry = {};
+        let usedCountries = [];
         let score = 0;
-        let timer;
+        let streak = 0;
+        let correctAnswers = 0;
+        let totalAnswers = 0;
         let hintCounter = 0;
+        let selectedDifficulty = 'all';
+        let regions = [];
+        let selectedRegion = 'all';
+        
+        // Elementi DOM
+        const loader = document.getElementById('loader');
         const startButton = document.getElementById('start-button');
         const studyModeButton = document.getElementById('study-mode-button');
         const homeScreen = document.getElementById('home-screen');
@@ -255,55 +562,91 @@
         const endScreen = document.getElementById('end-screen');
         const studyScreen = document.getElementById('study-screen');
         const studyContainer = document.getElementById('study-container');
+        const studyFilter = document.getElementById('study-filter');
+        const regionFilter = document.getElementById('region-filter');
         const backButton = document.getElementById('back-button');
         const backToHomeButton = document.getElementById('back-to-home-button');
         const flagImage = document.getElementById('flag-image');
         const countryInput = document.getElementById('country-input');
         const submitButton = document.getElementById('submit-button');
+        const skipButton = document.getElementById('skip-button');
         const hintButton = document.getElementById('hint-button');
         const feedback = document.getElementById('feedback');
         const scoreDisplay = document.getElementById('score');
+        const streakDisplay = document.getElementById('streak');
+        const flagsCountDisplay = document.getElementById('flags-count');
+        const progressBar = document.getElementById('progress-bar');
+        const factCard = document.getElementById('fact-card');
+        const countryFact = document.getElementById('country-fact');
         const finalScoreDisplay = document.getElementById('final-score');
+        const finalCorrectDisplay = document.getElementById('final-correct');
+        const finalAccuracyDisplay = document.getElementById('final-accuracy');
         const restartButton = document.getElementById('restart-button');
         const shareButton = document.getElementById('share-button');
-
+        const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+        
+        // Evento per selezionare la difficoltà
+        difficultyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                difficultyButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                selectedDifficulty = button.dataset.difficulty;
+            });
+        });
+        
+        // Inizia il gioco
         startButton.addEventListener('click', () => {
             homeScreen.style.display = 'none';
-            gameScreen.style.display = 'block';
-            fetchCountries();
+            loader.style.display = 'block';
+            // Carica i dati dei Paesi
+            fetchCountries('game');
         });
-
+        
+        // Attiva la modalità studio
         studyModeButton.addEventListener('click', () => {
             homeScreen.style.display = 'none';
-            studyScreen.style.display = 'block';
-            fetchCountriesForStudy();
+            loader.style.display = 'block';
+            fetchCountries('study');
         });
-
+        
+        // Torna al menu principale dalla modalità studio
         backButton.addEventListener('click', () => {
             studyScreen.style.display = 'none';
             homeScreen.style.display = 'block';
         });
-
+        
+        // Torna al menu principale dalla modalità gioco
         backToHomeButton.addEventListener('click', () => {
             gameScreen.style.display = 'none';
             homeScreen.style.display = 'block';
+            resetGame();
         });
-
-        submitButton.addEventListener('click', () => {
-            const userAnswer = countryInput.value.trim().toLowerCase();
-            if (userAnswer === currentCountry.name.toLowerCase()) {
-                feedback.textContent = 'Esatto!';
-                feedback.style.color = 'lightgreen';
-                score++;
-                scoreDisplay.textContent = score;
-                hintCounter = 0;
-                loadNewFlag();
-            } else {
-                feedback.textContent = 'Riprova!';
-                feedback.style.color = 'red';
+        
+        // Verifica la risposta dell'utente
+        submitButton.addEventListener('click', checkAnswer);
+        
+        // Permette di inviare con Invio
+        countryInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkAnswer();
             }
         });
-
+        
+        // Salta la bandiera corrente
+        skipButton.addEventListener('click', () => {
+            feedback.textContent = `Peccato! Era ${currentCountry.name}`;
+            feedback.style.color = 'orange';
+            streak = 0;
+            streakDisplay.textContent = streak;
+            factCard.style.display = 'block';
+            countryFact.textContent = generateRandomFact(currentCountry);
+            setTimeout(() => {
+                factCard.style.display = 'none';
+                loadNewFlag();
+            }, 3000);
+        });
+        
+        // Fornisce un suggerimento
         hintButton.addEventListener('click', () => {
             if (hintCounter === 0) {
                 feedback.textContent = `Aiuto: Si trova in ${currentCountry.region}`;
@@ -317,17 +660,17 @@
             }
             hintCounter++;
         });
-
+        
+        // Ricomincia il gioco dalla schermata finale
         restartButton.addEventListener('click', () => {
-            score = 0;
-            scoreDisplay.textContent = score;
-            usedCountries = [];
             endScreen.style.display = 'none';
             homeScreen.style.display = 'block';
+            resetGame();
         });
-
+        
+        // Condividi il risultato
         shareButton.addEventListener('click', () => {
-            const shareText = `Ho ottenuto un punteggio di ${score} su FlagExplorer! Prova a battermi!`;
+            const shareText = `Ho ottenuto un punteggio di ${score} con una precisione del ${finalAccuracyDisplay.textContent} su FlagExplorer! Prova a battermi!`;
             if (navigator.share) {
                 navigator.share({
                     title: 'FlagExplorer',
@@ -335,66 +678,154 @@
                     url: window.location.href
                 }).catch(error => console.error('Errore nella condivisione:', error));
             } else {
-                alert('La condivisione non è supportata su questo dispositivo.');
+                // Fallback per browser che non supportano Web Share API
+                const textarea = document.createElement('textarea');
+                textarea.value = shareText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('Testo copiato negli appunti!');
             }
         });
-
-        let countries = [];
-        let currentCountry = {};
-        let usedCountries = [];
-
-        function fetchCountries() {
+        
+        // Filtro nella modalità studio
+        studyFilter.addEventListener('input', () => {
+            filterStudyCards();
+        });
+        
+        // Funzione per recuperare i dati dei Paesi dall'API
+        function fetchCountries(mode) {
             fetch('https://restcountries.com/v3.1/all')
                 .then(response => response.json())
                 .then(data => {
+                    // Elabora i dati dei paesi
                     countries = data.map(country => ({
-                        name: country.translations.ita.common || country.name.common,
-                        flag: country.flags.svg,
-                        region: country.region || 'sconosciuta'
+                        name: country.translations.ita?.common || country.name.common,
+                        flag: country.flags.svg || country.flags.png,
+                        region: country.region || 'Non specificata',
+                        subregion: country.subregion || 'Non specificata',
+                        capital: country.capital ? country.capital[0] : 'Non specificata',
+                        population: country.population || 0,
+                        languages: country.languages ? Object.values(country.languages) : ['Non specificata'],
+                        currencies: country.currencies ? Object.values(country.currencies).map(c => c.name).join(', ') : 'Non specificata',
+                        area: country.area || 0,
+                        difficulty: calculateDifficulty(country)
                     }));
-                    loadNewFlag();
+                    
+                    // Raccogli tutte le regioni disponibili
+                    regions = [...new Set(countries.map(country => country.region))].filter(region => region);
+                    
+                    if (mode === 'game') {
+                        gameScreen.style.display = 'block';
+                        filteredCountries = filterCountriesByDifficulty(countries, selectedDifficulty);
+                        usedCountries = [];
+                        loadNewFlag();
+                    } else if (mode === 'study') {
+                        studyScreen.style.display = 'block';
+                        setupRegionFilters();
+                        setupStudyMode();
+                    }
+                    
+                    loader.style.display = 'none';
                 })
                 .catch(error => {
                     console.error('Errore nel recupero dei dati:', error);
+                    feedback.textContent = 'Errore nel caricamento dei dati. Riprova più tardi.';
+                    feedback.style.color = 'red';
+                    loader.style.display = 'none';
                 });
         }
-
-        function fetchCountriesForStudy() {
-            fetch('https://restcountries.com/v3.1/all')
-                .then(response => response.json())
-                .then(data => {
-                    studyContainer.innerHTML = '';
-                    data.forEach(country => {
-                        const studyCard = document.createElement('div');
-                        studyCard.classList.add('study-card');
-                        studyCard.innerHTML = `
-                            <img src="${country.flags.svg}" alt="${country.translations.ita.common || country.name.common} flag">
-                            <h4>${country.translations.ita.common || country.name.common}</h4>
-                            <p>Capitale: ${country.capital ? country.capital[0] : 'sconosciuta'}</p>
-                        `;
-                        studyContainer.appendChild(studyCard);
-                    });
-                })
-                .catch(error => {
-                    console.error('Errore nel recupero dei dati per la modalità studio:', error);
+        
+        // Configura i filtri per regione nella modalità studio
+        function setupRegionFilters() {
+            // Svuota il contenitore dei filtri tranne il bottone "Tutte le regioni"
+            const allRegionsButton = regionFilter.querySelector('.region-btn[data-region="all"]');
+            regionFilter.innerHTML = '';
+            regionFilter.appendChild(allRegionsButton);
+            
+            // Aggiungi le regioni come pulsanti
+            regions.sort().forEach(region => {
+                const button = document.createElement('button');
+                button.classList.add('region-btn');
+                button.dataset.region = region;
+                button.textContent = region;
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.region-btn').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    selectedRegion = region;
+                    filterStudyCards();
                 });
+                regionFilter.appendChild(button);
+            });
         }
-
+        
+        // Configura la modalità studio
+        function setupStudyMode() {
+            studyContainer.innerHTML = '';
+            countries.forEach(country => {
+                const studyCard = document.createElement('div');
+                studyCard.classList.add('study-card');
+                studyCard.dataset.region = country.region;
+                studyCard.dataset.name = country.name.toLowerCase();
+                
+                studyCard.innerHTML = `
+                    <img src="${country.flag}" alt="${country.name} flag" loading="lazy">
+                    <h4>${country.name}</h4>
+                    <p>Capitale: ${country.capital}</p>
+                    <p>Regione: ${country.region}</p>
+                `;
+                
+                studyCard.addEventListener('click', () => {
+                    alert(`${country.name}\n\nCapitale: ${country.capital}\nRegione: ${country.region}\nPopolazione: ${country.population.toLocaleString()}\nLingue: ${country.languages.join(', ')}\nValuta: ${country.currencies}`);
+                });
+                
+                studyContainer.appendChild(studyCard);
+            });
+        }
+        
+        // Filtra le carte nella modalità studio
+        function filterStudyCards() {
+            const searchTerm = studyFilter.value.toLowerCase();
+            document.querySelectorAll('.study-card').forEach(card => {
+                const matchesSearch = card.dataset.name.includes(searchTerm);
+                const matchesRegion = selectedRegion === 'all' || card.dataset.region === selectedRegion;
+                card.style.display = matchesSearch && matchesRegion ? 'flex' : 'none';
+            });
+        }
+        
+        // Carica una nuova bandiera
         function loadNewFlag() {
             feedback.textContent = '';
+            factCard.style.display = 'none';
             countryInput.value = '';
-
-            if (usedCountries.length === countries.length) {
-                usedCountries = [];
+            hintCounter = 0;
+            
+            // Se tutti i Paesi sono stati usati o non ci sono Paesi filtrati, mostra schermata finale
+            if (filteredCountries.length === 0 || usedCountries.length >= filteredCountries.length) {
+                showEndScreen();
+                return;
             }
-
+            
+            // Seleziona un Paese non ancora usato
             do {
-                currentCountry = countries[Math.floor(Math.random() * countries.length)];
+                currentCountry = filteredCountries[Math.floor(Math.random() * filteredCountries.length)];
             } while (usedCountries.includes(currentCountry));
-
+            
             usedCountries.push(currentCountry);
             flagImage.src = currentCountry.flag;
+            
+            // Aggiorna il contatore e la progress bar
+            flagsCountDisplay.textContent = `${usedCountries.length}/${filteredCountries.length}`;
+            progressBar.style.width = `${(usedCountries.length / filteredCountries.length) * 100}%`;
+            
+            // Focus sul campo di input
+            setTimeout(() => {
+                countryInput.focus();
+            }, 100);
         }
-    </script>
-</body>
-</html>
+        
+        // Verifica la risposta
+        function checkAnswer() {
+            const userAnswer = normalizeString(countryInput.value);
+            const correctAnswer = normalizeString(currentCountry.name);
